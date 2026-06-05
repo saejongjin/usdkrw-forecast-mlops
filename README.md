@@ -26,6 +26,11 @@ Processes:
 txt src/preprocess.py data/processed/market_data_1m_24h_interpolated.csv 
 
 ---
+docker environment build : 
+
+docker compose up
+
+---
 
 ## Run
 

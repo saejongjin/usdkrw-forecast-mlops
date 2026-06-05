@@ -1,0 +1,459 @@
+/* =========================
+   전체 페이지
+========================= */
+.page {
+    min-height: 100vh;
+    background: #f6f8fb;
+    padding: 18px 22px 24px 22px;
+    box-sizing: border-box;
+    font-family: "Arial", "Noto Sans KR", sans-serif;
+}
+
+/* =========================
+   Header
+========================= */
+.header {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.main-title {
+    margin: 0;
+    font-size: 30px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.5px;
+}
+
+.subtitle {
+    margin-top: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #6b7280;
+}
+
+/* =========================
+   Grid Layout
+========================= */
+.grid-row {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 14px;
+}
+
+/* =========================
+   Card 공통
+========================= */
+.dashboard-card {
+    background: #ffffff;
+    border: 1px solid #dce3ef;
+    border-radius: 14px;
+    padding: 16px 18px;
+    box-shadow: 0 3px 10px rgba(15, 23, 42, 0.06);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* =========================
+   Card Title
+========================= */
+.card-title-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 14px;
+}
+
+.card-number {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 800;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+    box-shadow: 0 2px 5px rgba(37, 99, 235, 0.25);
+}
+
+.card-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.2px;
+}
+
+/* 내용 비워둔 영역 */
+.card-body-empty {
+    min-height: 160px;
+}
+
+/* =========================
+   모델 요약 카드
+========================= */
+.model-summary-card {
+    padding: 16px 18px;
+}
+
+.model-summary-modern {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+/* 항목 한 줄 */
+.summary-item-modern {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+/* 아이콘 박스 */
+.summary-icon-box {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 10px;
+    background: #f3f4f6;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 아이콘 */
+.summary-icon {
+    font-size: 17px;
+    color: #6b7280;
+}
+
+/* 텍스트 영역 */
+.summary-text-box {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+}
+
+/* 라벨 */
+.summary-label-modern {
+    font-size: 13px;
+    font-weight: 800;
+    color: #4b5563;
+    line-height: 1.25;
+}
+
+/* 값 */
+.summary-value-modern {
+    font-size: 14px;
+    font-weight: 700;
+    color: #111827;
+    line-height: 1.35;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+}
+
+/* =========================
+   반응형
+========================= */
+@media (max-width: 900px) {
+    .grid-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .dashboard-card {
+        min-height: 220px !important;
+    }
+
+    .main-title {
+        font-size: 24px;
+    }
+
+    .subtitle {
+        font-size: 13px;
+    }
+}
+
+/* =========================
+   Simulation Panel 조절 변수
+========================= */
+:root {
+    --sim-var-col-width: 84px;
+    --sim-slider-col-width: 480px;
+    --sim-value-col-width: 90px;
+    --sim-button-col-width: 76px;
+
+    --sim-button-width: 38px;
+    --sim-button-height: 36px;
+    --sim-button-font-size: 17px;
+
+    --sim-row-gap: 14px;
+    --sim-row-vertical-gap: 18px;
+}
+
+/* =========================
+   Simulation Panel
+========================= */
+.simulation-card {
+    overflow: hidden;
+}
+
+.simulation-header {
+    display: grid;
+    grid-template-columns:
+        var(--sim-var-col-width)
+        var(--sim-slider-col-width)
+        var(--sim-value-col-width)
+        var(--sim-button-col-width);
+
+    gap: var(--sim-row-gap);
+    align-items: center;
+
+    padding: 0 4px 8px 4px;
+    border-bottom: 1px solid #e5e7eb;
+
+    font-size: 12px;
+    font-weight: 800;
+    color: #6b7280;
+}
+
+.simulation-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sim-row-vertical-gap);
+    margin-top: 14px;
+}
+
+.sim-row {
+    display: grid;
+    grid-template-columns:
+        var(--sim-var-col-width)
+        var(--sim-slider-col-width)
+        var(--sim-value-col-width)
+        var(--sim-button-col-width);
+
+    gap: var(--sim-row-gap);
+    align-items: center;
+}
+
+/* 변수명 */
+.sim-var-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #111827;
+    letter-spacing: -0.2px;
+    white-space: nowrap;
+}
+
+/* 조정바: 왼쪽 정렬 + 고정폭 */
+.sim-slider {
+    width: var(--sim-slider-col-width);
+    min-width: var(--sim-slider-col-width);
+    max-width: var(--sim-slider-col-width);
+    padding: 0;
+    justify-self: start;
+}
+
+.sim-slider .rc-slider {
+    width: 100%;
+}
+
+/* 현재값: 오른쪽 정렬 + 고정폭 */
+.sim-value-label {
+    width: var(--sim-value-col-width);
+    min-width: var(--sim-value-col-width);
+    max-width: var(--sim-value-col-width);
+
+    height: 34px;
+    padding: 4px 8px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+
+    text-align: right;
+    box-sizing: border-box;
+    white-space: nowrap;
+}
+
+/* +/- 버튼 묶음 */
+.sim-step-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: calc(var(--sim-button-width) * 2);
+    height: var(--sim-button-height);
+
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    overflow: hidden;
+    background: #ffffff;
+    justify-self: start;
+}
+
+/* +/- 버튼 */
+.sim-step-button {
+    width: var(--sim-button-width);
+    height: var(--sim-button-height);
+
+    border: none;
+    background: #ffffff;
+    color: #0f172a;
+
+    font-size: var(--sim-button-font-size);
+    font-weight: 800;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+}
+
+.sim-step-button + .sim-step-button {
+    border-left: 1px solid #e5e7eb;
+}
+
+.sim-step-button:hover {
+    background: #f3f4f6;
+}
+
+.sim-step-button:active {
+    background: #e5e7eb;
+}
+
+.simulation-note {
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid #e5e7eb;
+    font-size: 11px;
+    color: #6b7280;
+}
+
+/* Slider mark 정리 */
+.rc-slider-mark {
+    width: 100%;
+}
+
+.rc-slider-mark-text {
+    white-space: nowrap;
+    font-size: 11px !important;
+    color: #6b7280 !important;
+    text-align: center;
+}
+
+/* Dash slider tooltip 완전 제거 */
+.dash-slider-tooltip,
+.dash-slider-tooltip.always-visible,
+.dash-slider-thumb .dash-slider-tooltip,
+.dash-slider-thumb:hover .dash-slider-tooltip,
+.dash-slider-thumb:focus .dash-slider-tooltip,
+.dash-slider-thumb:active .dash-slider-tooltip,
+.rc-slider-tooltip,
+.rc-slider-tooltip-placement-top,
+.rc-slider-tooltip-placement-bottom,
+.rc-slider-tooltip-content,
+.rc-slider-tooltip-inner {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+/* 작은 화면 대응 */
+@media (max-width: 900px) {
+    .simulation-header,
+    .sim-row {
+        grid-template-columns: 1fr;
+    }
+
+    .sim-slider {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+    }
+
+    .sim-value-label {
+        justify-content: flex-start;
+        text-align: left;
+    }
+
+    .sim-step-buttons {
+        justify-self: start;
+    }
+}
+
+/* =========================
+   Simulation Result Gauge
+========================= */
+.simulation-result-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.gauge-graph {
+    width: 100%;
+    height: 250px;
+}
+
+.simulation-result-text {
+    text-align: center;
+    margin-top: 4px;
+}
+
+.result-main-text {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.2;
+}
+
+.result-sub-text {
+    margin-top: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.result-up .result-main-text {
+    color: #16a34a;
+}
+
+.result-down .result-main-text {
+    color: #dc2626;
+}
+
+
+/* dcc.Slider 현재값 tooltip 완전 숨김 */
+.rc-slider-tooltip,
+.rc-slider-tooltip-placement-top,
+.rc-slider-tooltip-placement-bottom,
+.rc-slider-tooltip-content,
+.rc-slider-tooltip-inner {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+/* Dash dcc.Slider 현재값 말풍선 숨김: Dash 4.x는 dash-slider-tooltip 클래스를 사용합니다. */
+.dash-slider-tooltip,
+.dash-slider-tooltip.always-visible,
+.dash-slider-thumb .dash-slider-tooltip,
+.dash-slider-thumb:hover .dash-slider-tooltip,
+.dash-slider-thumb:focus .dash-slider-tooltip,
+.dash-slider-thumb:active .dash-slider-tooltip {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
