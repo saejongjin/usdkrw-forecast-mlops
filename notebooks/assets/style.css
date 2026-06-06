@@ -41,6 +41,12 @@
     margin-bottom: 14px;
 }
 
+.grid-row > *,
+.dashboard-card,
+.simulation-card {
+    min-width: 0;
+}
+
 /* =========================
    Card 공통
 ========================= */
@@ -89,9 +95,98 @@
     letter-spacing: -0.2px;
 }
 
-/* 내용 비워둔 영역 */
 .card-body-empty {
     min-height: 160px;
+}
+
+/* =========================
+   4번 PDP 카드
+========================= */
+.pdp-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.pdp-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 8px;
+    min-width: 0;
+}
+
+.pdp-title-left {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+    flex: 1 1 auto;
+}
+
+.pdp-title-left .card-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 14px;
+    letter-spacing: -0.35px;
+}
+
+.pdp-dropdown {
+    width: 110px;
+    min-width: 110px;
+    flex: 0 0 auto;
+    font-size: 12px;
+}
+
+.pdp-dropdown .Select-control,
+.pdp-dropdown .Select-placeholder,
+.pdp-dropdown .Select-value,
+.pdp-dropdown .Select-value-label {
+    min-height: 30px !important;
+    height: 30px !important;
+    line-height: 30px !important;
+    font-size: 12px !important;
+}
+
+.pdp-dropdown .Select-input {
+    height: 30px !important;
+}
+
+.pdp-graph {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 300px;
+}
+
+.pdp-graph .js-plotly-plot,
+.pdp-graph .plot-container,
+.pdp-graph .svg-container {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+@media (max-width: 980px) {
+    .pdp-graph {
+        height: 300px;
+    }
+}
+
+@media (max-width: 520px) {
+    .pdp-title-row {
+        gap: 6px;
+    }
+
+    .pdp-dropdown {
+        width: 100px;
+        min-width: 100px;
+    }
+
+    .pdp-title-left .card-title {
+        font-size: 13px;
+    }
 }
 
 /* =========================
@@ -107,14 +202,12 @@
     gap: 13px;
 }
 
-/* 항목 한 줄 */
 .summary-item-modern {
     display: flex;
     align-items: flex-start;
     gap: 12px;
 }
 
-/* 아이콘 박스 */
 .summary-icon-box {
     width: 34px;
     height: 34px;
@@ -127,13 +220,11 @@
     justify-content: center;
 }
 
-/* 아이콘 */
 .summary-icon {
     font-size: 17px;
     color: #6b7280;
 }
 
-/* 텍스트 영역 */
 .summary-text-box {
     display: flex;
     flex-direction: column;
@@ -141,7 +232,6 @@
     min-width: 0;
 }
 
-/* 라벨 */
 .summary-label-modern {
     font-size: 13px;
     font-weight: 800;
@@ -149,7 +239,6 @@
     line-height: 1.25;
 }
 
-/* 값 */
 .summary-value-modern {
     font-size: 14px;
     font-weight: 700;
@@ -160,9 +249,9 @@
 }
 
 /* =========================
-   반응형
+   반응형: 전체 대시보드
 ========================= */
-@media (max-width: 900px) {
+@media (max-width: 980px) {
     .grid-row {
         grid-template-columns: 1fr !important;
     }
@@ -184,17 +273,22 @@
    Simulation Panel 조절 변수
 ========================= */
 :root {
-    --sim-var-col-width: 84px;
-    --sim-slider-col-width: 480px;
-    --sim-value-col-width: 90px;
-    --sim-button-col-width: 76px;
+    --sim-var-col-width: 58px;
+    --sim-importance-col-width: 56px;
+    --sim-slider-min-width: 120px;
+    --sim-value-col-width: 72px;
+    --sim-button-col-width: 66px;
 
-    --sim-button-width: 38px;
-    --sim-button-height: 36px;
+    --sim-button-height: 34px;
     --sim-button-font-size: 17px;
 
-    --sim-row-gap: 14px;
-    --sim-row-vertical-gap: 18px;
+    --sim-row-gap: 8px;
+    --sim-row-vertical-gap: 17px;
+
+    --sim-range-track-height: 6px;
+    --sim-range-thumb-size: 16px;
+    --sim-range-hit-height: 30px;
+    --sim-range-mark-font-size: 11px;
 }
 
 /* =========================
@@ -202,13 +296,15 @@
 ========================= */
 .simulation-card {
     overflow: hidden;
+    container-type: inline-size;
 }
 
 .simulation-header {
     display: grid;
     grid-template-columns:
         var(--sim-var-col-width)
-        var(--sim-slider-col-width)
+        var(--sim-importance-col-width)
+        minmax(var(--sim-slider-min-width), 1fr)
         var(--sim-value-col-width)
         var(--sim-button-col-width);
 
@@ -221,6 +317,15 @@
     font-size: 12px;
     font-weight: 800;
     color: #6b7280;
+    min-width: 0;
+}
+
+.sim-header-importance {
+    text-align: right;
+}
+
+.sim-header-value {
+    text-align: right;
 }
 
 .simulation-body {
@@ -228,83 +333,251 @@
     flex-direction: column;
     gap: var(--sim-row-vertical-gap);
     margin-top: 14px;
+    min-width: 0;
 }
 
 .sim-row {
     display: grid;
     grid-template-columns:
         var(--sim-var-col-width)
-        var(--sim-slider-col-width)
+        var(--sim-importance-col-width)
+        minmax(var(--sim-slider-min-width), 1fr)
         var(--sim-value-col-width)
         var(--sim-button-col-width);
 
     gap: var(--sim-row-gap);
     align-items: center;
+    min-width: 0;
 }
 
-/* 변수명 */
 .sim-var-name {
     font-size: 15px;
     font-weight: 800;
     color: #111827;
     letter-spacing: -0.2px;
     white-space: nowrap;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* 조정바: 왼쪽 정렬 + 고정폭 */
-.sim-slider {
-    width: var(--sim-slider-col-width);
-    min-width: var(--sim-slider-col-width);
-    max-width: var(--sim-slider-col-width);
-    padding: 0;
-    justify-self: start;
-}
-
-.sim-slider .rc-slider {
+.sim-importance-value {
     width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    padding-right: 2px;
+    text-align: right;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 13px;
+    font-weight: 800;
+    color: #2563eb;
+    box-sizing: border-box;
 }
 
-/* 현재값: 오른쪽 정렬 + 고정폭 */
+/* =========================
+   Custom Range Slider
+   - 실제 range input은 투명 오버레이
+   - 보이는 트랙/채움/손잡이는 div로 직접 렌더링
+========================= */
+.sim-range-wrap {
+    position: relative;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    height: 46px;
+    justify-self: stretch;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+.sim-range-track {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 9px;
+    width: 100%;
+    height: var(--sim-range-track-height);
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.sim-range-fill {
+    height: 100%;
+    width: 0%;
+    background: #7e49d8;
+    border-radius: 999px;
+    pointer-events: none;
+}
+
+.sim-range-thumb-dot {
+    position: absolute;
+    top: calc(9px + (var(--sim-range-track-height) / 2) - (var(--sim-range-thumb-size) / 2));
+    left: 0%;
+    width: var(--sim-range-thumb-size);
+    height: var(--sim-range-thumb-size);
+    border-radius: 50%;
+    background: #7e49d8;
+    border: 2px solid #ffffff;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.25);
+    transform: translateX(-50%);
+    pointer-events: none;
+    z-index: 2;
+}
+
+.sim-range-input,
+.sim-range-input[type="range"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    height: var(--sim-range-hit-height);
+    margin: 0;
+    padding: 0;
+    border: 0 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    opacity: 0 !important;
+    cursor: pointer;
+    z-index: 3;
+    appearance: none;
+    -webkit-appearance: none;
+    box-sizing: border-box;
+}
+
+.sim-range-input:focus,
+.sim-range-input:focus-visible,
+.sim-range-wrap:focus-within {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.sim-range-input::-webkit-slider-runnable-track {
+    width: 100%;
+    height: var(--sim-range-hit-height);
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.sim-range-input::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 28px;
+    height: var(--sim-range-hit-height);
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+.sim-range-input::-moz-range-track {
+    width: 100%;
+    height: var(--sim-range-hit-height);
+    background: transparent !important;
+    border: 0 !important;
+}
+
+.sim-range-input::-moz-range-thumb {
+    width: 28px;
+    height: var(--sim-range-hit-height);
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+
+.sim-range-marks {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 25px;
+    height: 15px;
+    font-size: var(--sim-range-mark-font-size);
+    color: #374151;
+    line-height: 1.1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.sim-range-mark {
+    position: absolute;
+    top: 0;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-sizing: border-box;
+}
+
+.sim-range-mark-left {
+    left: 0;
+    max-width: 42%;
+    text-align: left;
+}
+
+.sim-range-mark-center {
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: 34%;
+    text-align: center;
+}
+
+.sim-range-mark-right {
+    right: 0;
+    max-width: 42%;
+    text-align: right;
+}
+
 .sim-value-label {
-    width: var(--sim-value-col-width);
-    min-width: var(--sim-value-col-width);
-    max-width: var(--sim-value-col-width);
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
 
     height: 34px;
-    padding: 4px 8px;
+    padding: 4px 2px;
 
     display: flex;
     align-items: center;
     justify-content: flex-end;
 
     font-size: 15px;
-    font-weight: 700;
+    font-weight: 800;
     color: #111827;
 
     text-align: right;
     box-sizing: border-box;
     white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-/* +/- 버튼 묶음 */
 .sim-step-buttons {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: calc(var(--sim-button-width) * 2);
+    width: 100%;
+    max-width: 100%;
     height: var(--sim-button-height);
 
     border: 1px solid #d1d5db;
     border-radius: 9px;
     overflow: hidden;
     background: #ffffff;
-    justify-self: start;
+    justify-self: stretch;
+    box-sizing: border-box;
 }
 
-/* +/- 버튼 */
 .sim-step-button {
-    width: var(--sim-button-width);
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
     height: var(--sim-button-height);
 
     border: none;
@@ -341,56 +614,141 @@
     color: #6b7280;
 }
 
-/* Slider mark 정리 */
-.rc-slider-mark {
-    width: 100%;
-}
-
-.rc-slider-mark-text {
-    white-space: nowrap;
-    font-size: 11px !important;
-    color: #6b7280 !important;
-    text-align: center;
-}
-
-/* Dash slider tooltip 완전 제거 */
-.dash-slider-tooltip,
-.dash-slider-tooltip.always-visible,
-.dash-slider-thumb .dash-slider-tooltip,
-.dash-slider-thumb:hover .dash-slider-tooltip,
-.dash-slider-thumb:focus .dash-slider-tooltip,
-.dash-slider-thumb:active .dash-slider-tooltip,
-.rc-slider-tooltip,
-.rc-slider-tooltip-placement-top,
-.rc-slider-tooltip-placement-bottom,
-.rc-slider-tooltip-content,
-.rc-slider-tooltip-inner {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
-
-/* 작은 화면 대응 */
-@media (max-width: 900px) {
-    .simulation-header,
-    .sim-row {
-        grid-template-columns: 1fr;
+/* 카드 폭이 좁아질 때도 한 줄 유지: 중요도/현재값/버튼을 축소하고 중앙 mark 숨김 */
+@container (max-width: 610px) {
+    :root {
+        --sim-row-gap: 7px;
     }
 
-    .sim-slider {
-        width: 100%;
-        min-width: 0;
-        max-width: 100%;
+    .simulation-header,
+    .sim-row {
+        grid-template-columns:
+            54px
+            50px
+            minmax(90px, 1fr)
+            62px
+            60px;
+        gap: 7px;
+    }
+
+    .sim-var-name {
+        font-size: 14px;
+    }
+
+    .sim-importance-value {
+        font-size: 12px;
     }
 
     .sim-value-label {
-        justify-content: flex-start;
-        text-align: left;
+        font-size: 14px;
+    }
+
+    .sim-range-mark-center {
+        display: none;
+    }
+}
+
+@container (max-width: 470px) {
+    .simulation-header,
+    .sim-row {
+        grid-template-columns:
+            52px
+            44px
+            minmax(70px, 1fr)
+            56px
+            56px;
+        gap: 5px;
+    }
+
+    .simulation-header {
+        font-size: 11px;
+    }
+
+    .sim-var-name,
+    .sim-value-label {
+        font-size: 13px;
+    }
+
+    .sim-importance-value {
+        font-size: 11px;
+    }
+
+    .sim-range-mark-left,
+    .sim-range-mark-right {
+        font-size: 10px !important;
+        max-width: 50%;
     }
 
     .sim-step-buttons {
+        height: 32px;
+    }
+
+    .sim-step-button {
+        height: 32px;
+        font-size: 16px;
+    }
+}
+
+@container (max-width: 390px) {
+    .simulation-header {
+        grid-template-columns: 52px 44px 1fr;
+    }
+
+    .simulation-header .sim-header-value,
+    .simulation-header .sim-header-button {
+        display: none;
+    }
+
+    .sim-row {
+        grid-template-columns: 52px 44px minmax(80px, 1fr);
+        grid-template-areas:
+            "var imp val"
+            "var imp slider"
+            "var imp buttons";
+        row-gap: 4px;
+        column-gap: 6px;
+    }
+
+    .sim-var-name {
+        grid-area: var;
+        align-self: start;
+        padding-top: 2px;
+    }
+
+    .sim-importance-value {
+        grid-area: imp;
+        align-self: start;
+        padding-top: 2px;
+    }
+
+    .sim-range-wrap {
+        grid-area: slider;
+    }
+
+    .sim-value-label {
+        grid-area: val;
+        justify-content: flex-start;
+        text-align: left;
+        height: 20px;
+        padding: 0;
+    }
+
+    .sim-step-buttons {
+        grid-area: buttons;
+        width: 58px;
         justify-self: start;
+    }
+}
+
+@media (max-width: 520px) {
+    .page {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+
+    .dashboard-card {
+        padding-left: 14px;
+        padding-right: 14px;
     }
 }
 
@@ -431,29 +789,4 @@
 
 .result-down .result-main-text {
     color: #dc2626;
-}
-
-
-/* dcc.Slider 현재값 tooltip 완전 숨김 */
-.rc-slider-tooltip,
-.rc-slider-tooltip-placement-top,
-.rc-slider-tooltip-placement-bottom,
-.rc-slider-tooltip-content,
-.rc-slider-tooltip-inner {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
-/* Dash dcc.Slider 현재값 말풍선 숨김: Dash 4.x는 dash-slider-tooltip 클래스를 사용합니다. */
-.dash-slider-tooltip,
-.dash-slider-tooltip.always-visible,
-.dash-slider-thumb .dash-slider-tooltip,
-.dash-slider-thumb:hover .dash-slider-tooltip,
-.dash-slider-thumb:focus .dash-slider-tooltip,
-.dash-slider-thumb:active .dash-slider-tooltip {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
 }
