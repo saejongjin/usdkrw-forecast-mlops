@@ -7,6 +7,7 @@
     padding: 18px 22px 24px 22px;
     box-sizing: border-box;
     font-family: "Arial", "Noto Sans KR", sans-serif;
+    position: relative;
 }
 
 /* =========================
@@ -30,6 +31,96 @@
     font-size: 14px;
     font-weight: 500;
     color: #6b7280;
+}
+
+/* =========================
+   Update Button
+========================= */
+.update-control {
+    position: absolute;
+    top: 18px;
+    right: 22px;
+    z-index: 20;
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.update-button {
+    min-width: 112px;
+    height: 40px;
+    padding: 0 18px;
+
+    border: 1px solid #1d4ed8;
+    border-radius: 12px;
+    background: #2563eb;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: -0.1px;
+
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.22);
+    cursor: pointer;
+}
+
+.update-button:hover {
+    background: #1d4ed8;
+}
+
+.update-button:active {
+    background: #1e40af;
+}
+
+.update-button:disabled {
+    background: #93c5fd;
+    border-color: #93c5fd;
+    cursor: wait;
+    box-shadow: none;
+}
+
+.update-status {
+    max-width: 260px;
+    min-height: 18px;
+
+    font-size: 12px;
+    font-weight: 700;
+    color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.update-status-ok {
+    color: #15803d;
+}
+
+/* Update warning 문구만 숨김 */
+.update-status-warning {
+    display: none !important;
+}
+
+.update-status-error {
+    color: #dc2626;
+}
+
+@media (max-width: 1100px) {
+    .update-control {
+        position: static;
+        justify-content: flex-end;
+        margin-bottom: 10px;
+    }
+
+    .update-button {
+        min-width: 100px;
+        height: 36px;
+        font-size: 13px;
+    }
+
+    .update-status {
+        max-width: 180px;
+    }
 }
 
 /* =========================
@@ -97,6 +188,42 @@
 
 .card-body-empty {
     min-height: 160px;
+}
+
+
+/* =========================
+   1번/2번 Row 1 Plotly Chart
+========================= */
+.current-gauge-card,
+.recent-line-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.current-gauge-graph,
+.recent-line-graph {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    height: 178px;
+}
+
+.current-gauge-graph .js-plotly-plot,
+.current-gauge-graph .plot-container,
+.current-gauge-graph .svg-container,
+.recent-line-graph .js-plotly-plot,
+.recent-line-graph .plot-container,
+.recent-line-graph .svg-container {
+    width: 100% !important;
+    min-width: 0 !important;
+}
+
+@media (max-width: 980px) {
+    .current-gauge-graph,
+    .recent-line-graph {
+        height: 178px;
+    }
 }
 
 /* =========================
@@ -754,39 +881,34 @@
 
 /* =========================
    Simulation Result Gauge
+   - 6번 게이지는 1번 게이지와 동일한 디자인 계열 사용
 ========================= */
 .simulation-result-card {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .gauge-graph {
+    flex: 1 1 auto;
     width: 100%;
-    height: 250px;
+    min-width: 0;
+    height: 292px;
+}
+
+.gauge-graph .js-plotly-plot,
+.gauge-graph .plot-container,
+.gauge-graph .svg-container {
+    width: 100% !important;
+    min-width: 0 !important;
 }
 
 .simulation-result-text {
-    text-align: center;
-    margin-top: 4px;
+    display: none;
 }
 
-.result-main-text {
-    font-size: 22px;
-    font-weight: 900;
-    line-height: 1.2;
-}
-
-.result-sub-text {
-    margin-top: 4px;
-    font-size: 12px;
-    font-weight: 600;
-    color: #6b7280;
-}
-
-.result-up .result-main-text {
-    color: #16a34a;
-}
-
-.result-down .result-main-text {
-    color: #dc2626;
+@media (max-width: 980px) {
+    .gauge-graph {
+        height: 292px;
+    }
 }
