@@ -16,6 +16,7 @@ def train_and_save_model():
 
     MODEL_PATH = os.path.join(PROCESSED_DIR, "predict_model.pkl")
     IMPORTANCE_PATH = os.path.join(PROCESSED_DIR, "feature_importance.csv")
+    TRAIN_DATA_PATH = os.path.join(PROCESSED_DIR, "train_data.csv")
 
 
     current_utc = pd.Timestamp.now(tz='UTC').floor('min')
@@ -49,11 +50,13 @@ def train_and_save_model():
         raw_data = raw_data.tz_convert('UTC')
 
     df = raw_data.reindex(full_time_grid)
-    df = df.interpolate(method='linear').fillna(method='ffill').fillna(method='bfill')
+    #df = df.interpolate(method='linear').fillna(method='ffill').fillna(method='bfill')
+    df = df.interpolate(method="linear").ffill().bfill()
 
     df['KRW_Future'] = df['KRW'].shift(-15)
     df['Target'] = np.where(df['KRW_Future'] > df['KRW'], 1, 0)
     df.dropna(inplace=True)
+    df.to_csv(TRAIN_DATA_PATH, index=True)
 
     features = ['BTC', 'JPY', 'WTI', 'GOLD', 'DXY']
     X = df[features]
